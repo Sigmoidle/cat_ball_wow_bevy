@@ -7,7 +7,7 @@ exclude = ["dist", "build", "assets", "credits"]
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-bevy = "0.13.0"
+bevy = { version = "0.13.0" }
 
 # Enable a small amount of optimization in debug mode
 [profile.dev]
