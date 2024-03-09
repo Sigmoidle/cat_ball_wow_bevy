@@ -29,7 +29,6 @@ fn main() {
             primary_window: Some(Window {
                 present_mode: bevy::window::PresentMode::AutoNoVsync,
                 resolution: WindowResolution::new(1000.0, 1000.0),
-                canvas: Some("#game".into()),
                 ..default()
             }),
             ..default()
