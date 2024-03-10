@@ -48,3 +48,7 @@ rustflags = [
 # In most cases the gains are negligible, but if you are on macos and have slow compile times you should see significant gains.
 [profile.dev]
 debug = 1
+
+[build]
+rustc-wrapper = "/opt/homebrew/Cellar/sccache/0.7.7/bin/sccache"
+target = "aarch64-apple-darwin"
