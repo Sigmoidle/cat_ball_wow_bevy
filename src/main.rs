@@ -3,6 +3,7 @@ use bevy::{
 };
 
 mod game;
+mod game_over;
 mod menu;
 mod splash;
 
@@ -23,11 +24,17 @@ fn main() {
                 update_sprites.after(apply_velocity),
             ),
         )
-        .add_plugins((game::game_plugin, splash::splash_plugin, menu::menu_plugin))
+        .add_plugins((
+            game::game_plugin,
+            splash::splash_plugin,
+            menu::menu_plugin,
+            game_over::game_over_plugin,
+        ))
         .add_plugins(DefaultPlugins.set(WindowPlugin {
             primary_window: Some(Window {
                 present_mode: bevy::window::PresentMode::AutoNoVsync,
                 resolution: WindowResolution::new(1000.0, 1000.0),
+                canvas: Some("#game".to_string()),
                 ..default()
             }),
             ..default()

@@ -44,6 +44,8 @@ pub fn game_plugin(app: &mut App) {
                 paw_friction.before(apply_velocity),
                 update_high_score,
                 update_score_texts,
+                despawn_ball,
+                end_game,
             )
                 .run_if(in_state(GameState::Game)),
         )
@@ -60,7 +62,28 @@ fn setup(mut cmd: Commands, game_assets: Res<GameAssets>) {
         Size(BALL_SHAPE),
         Velocity(Vec2 {
             x: BASE_BALL_VELOCITY,
-            y: BASE_BALL_VELOCITY,
+            y: -BASE_BALL_VELOCITY,
+        }),
+        SpriteBundle {
+            texture: game_assets.ball.clone(),
+            transform: Transform::from_xyz(0., 0., 2.),
+            sprite: Sprite {
+                custom_size: Some(BALL_SHAPE),
+                ..default()
+            },
+            ..default()
+        },
+    ));
+    // Spawn another ball
+    cmd.spawn((
+        InGameScreen,
+        Ball,
+        HitBox::default(),
+        Position(Vec2 { x: 0.0, y: 0.0 }),
+        Size(BALL_SHAPE),
+        Velocity(Vec2 {
+            x: -BASE_BALL_VELOCITY,
+            y: -BASE_BALL_VELOCITY,
         }),
         SpriteBundle {
             texture: game_assets.ball.clone(),
@@ -242,5 +265,19 @@ fn update_score_texts(
     }
     for mut high_score_text in set.p1().iter_mut() {
         high_score_text.sections[0].value = format!("High Score: {}", high_score.0);
+    }
+}
+
+fn despawn_ball(mut cmd: Commands, query: Query<(Entity, &Position), With<Ball>>) {
+    for (entity, position) in query.iter() {
+        if position.0.y < (-GAME_SHAPE.y / 2.0) - BALL_SHAPE.y {
+            cmd.entity(entity).despawn_recursive();
+        }
+    }
+}
+
+fn end_game(mut game_state: ResMut<NextState<GameState>>, query: Query<&Ball>) {
+    if query.is_empty() {
+        game_state.set(GameState::GameOver);
     }
 }

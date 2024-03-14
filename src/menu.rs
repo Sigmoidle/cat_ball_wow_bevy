@@ -78,7 +78,6 @@ fn blink(
 
 fn wait_for_touch(mut game_state: ResMut<NextState<GameState>>, touches: Res<GameTouches>) {
     if !touches.0.is_empty() {
-        info!("{:?}", touches.0);
         game_state.set(GameState::Game);
     }
 }
