@@ -139,6 +139,7 @@ fn setup(mut cmd: Commands, game_assets: Res<GameAssets>) {
     ));
     // Spawn Score Text
     cmd.spawn((
+        Position(Vec2 { x: -40.0, y: 40.0 }),
         InGameScreen,
         ScoreText,
         TextBundle::from_section(
@@ -148,16 +149,11 @@ fn setup(mut cmd: Commands, game_assets: Res<GameAssets>) {
                 font_size: 50.0,
                 color: Color::BLACK,
             },
-        )
-        .with_style(Style {
-            position_type: PositionType::Relative,
-            top: Val::Px(50.0),
-            left: Val::Px(50.0),
-            ..default()
-        }),
+        ),
     ));
     // Spawn High Score Text
     cmd.spawn((
+        Position(Vec2 { x: -40.0, y: 30.0 }),
         InGameScreen,
         HighScoreText,
         TextBundle::from_section(
@@ -167,13 +163,7 @@ fn setup(mut cmd: Commands, game_assets: Res<GameAssets>) {
                 font_size: 50.0,
                 color: Color::BLACK,
             },
-        )
-        .with_style(Style {
-            position_type: PositionType::Relative,
-            top: Val::Px(100.0),
-            left: Val::Px(50.0),
-            ..default()
-        }),
+        ),
     ));
 }
 
