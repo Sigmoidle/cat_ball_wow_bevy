@@ -20,59 +20,40 @@ fn setup(
     score: Res<Score>,
     high_score: Res<HighScore>,
 ) {
-    // Spawn game over Text
+    let text_style = TextStyle {
+        font: game_assets.font.clone(),
+        font_size: 50.0,
+        color: Color::BLACK,
+    };
+    // Spawn Game over text
     cmd.spawn((
-        InGameOverScreen,
-        TextBundle::from_section(
-            "Game over!",
-            TextStyle {
-                font: game_assets.font.clone(),
-                font_size: 50.0,
-                color: Color::BLACK,
-            },
-        )
-        .with_style(Style {
-            position_type: PositionType::Relative,
-            top: Val::Px(300.0),
-            left: Val::Px(400.0),
+        Text2dBundle {
+            text: Text::from_section("Game over!", text_style.clone())
+                .with_justify(JustifyText::Center),
+            transform: Transform::from_xyz(0.0, 45.0, 2.0).with_scale(Vec3::splat(0.14)),
             ..default()
-        }),
+        },
+        InGameOverScreen,
     ));
-    // Spawn Final Score Text
+    // Spawn final score text
     cmd.spawn((
-        InGameOverScreen,
-        TextBundle::from_section(
-            format!("Final Score: {}", score.0),
-            TextStyle {
-                font: game_assets.font.clone(),
-                font_size: 50.0,
-                color: Color::BLACK,
-            },
-        )
-        .with_style(Style {
-            position_type: PositionType::Relative,
-            top: Val::Px(400.0),
-            left: Val::Px(400.0),
+        Text2dBundle {
+            text: Text::from_section(format!("Final Score: {}", score.0), text_style.clone())
+                .with_justify(JustifyText::Center),
+            transform: Transform::from_xyz(0.0, 35.0, 2.0).with_scale(Vec3::splat(0.14)),
             ..default()
-        }),
+        },
+        InGameOverScreen,
     ));
-    // Spawn High Score Text
+    // Spawn final score text
     cmd.spawn((
-        InGameOverScreen,
-        TextBundle::from_section(
-            format!("High Score: {}", high_score.0),
-            TextStyle {
-                font: game_assets.font.clone(),
-                font_size: 50.0,
-                color: Color::BLACK,
-            },
-        )
-        .with_style(Style {
-            position_type: PositionType::Relative,
-            top: Val::Px(500.0),
-            left: Val::Px(400.0),
+        Text2dBundle {
+            text: Text::from_section(format!("High Score: {}", high_score.0), text_style.clone())
+                .with_justify(JustifyText::Center),
+            transform: Transform::from_xyz(0.0, 25.0, 2.0).with_scale(Vec3::splat(0.14)),
             ..default()
-        }),
+        },
+        InGameOverScreen,
     ));
 }
 

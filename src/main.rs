@@ -22,7 +22,6 @@ fn main() {
                 update_hitboxes.after(apply_velocity),
                 apply_velocity,
                 update_sprites.after(apply_velocity),
-                text_to_world,
             ),
         )
         .add_plugins((
@@ -46,9 +45,9 @@ fn main() {
 // Enum that will be used as a global state for the game
 #[derive(Clone, Copy, Default, Eq, PartialEq, Debug, Hash, States)]
 enum GameState {
+    #[default]
     Splash,
     Menu,
-    #[default]
     Game,
     GameOver,
 }
@@ -154,27 +153,6 @@ fn touch_input(
         .iter()
         .filter_map(|t| camera.viewport_to_world_2d(camera_transform, t.position()))
         .collect::<Vec<Vec2>>();
-}
-
-fn text_to_world(
-    mut query: Query<(&mut Style, &Position), With<Text>>,
-    q_camera: Query<(&Camera, &GlobalTransform)>,
-) {
-    let (camera, camera_transform) = q_camera.single();
-    for (mut style, position) in query.iter_mut() {
-        let text_pos = camera.world_to_viewport(
-            camera_transform,
-            Vec3 {
-                x: position.0.x,
-                y: position.0.y,
-                z: 0.0,
-            },
-        );
-        if let Some(pos) = text_pos {
-            style.top = Val::Px(pos.y);
-            style.left = Val::Px(pos.x);
-        }
-    }
 }
 
 // Generic system that takes a component as a parameter, and will despawn all entities with that component

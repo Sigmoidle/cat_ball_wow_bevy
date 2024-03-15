@@ -137,33 +137,32 @@ fn setup(mut cmd: Commands, game_assets: Res<GameAssets>) {
             ..default()
         },
     ));
-    // Spawn Score Text
+    let text_style = TextStyle {
+        font: game_assets.font.clone(),
+        font_size: 50.0,
+        color: Color::BLACK,
+    };
+    // Spawn score text
     cmd.spawn((
-        Position(Vec2 { x: -40.0, y: 40.0 }),
+        Text2dBundle {
+            text: Text::from_section("Score: ", text_style.clone())
+                .with_justify(JustifyText::Center),
+            transform: Transform::from_xyz(0.0, 45.0, 2.0).with_scale(Vec3::splat(0.14)),
+            ..default()
+        },
         InGameScreen,
         ScoreText,
-        TextBundle::from_section(
-            "Score: ",
-            TextStyle {
-                font: game_assets.font.clone(),
-                font_size: 50.0,
-                color: Color::BLACK,
-            },
-        ),
     ));
-    // Spawn High Score Text
+    // Spawn high score text
     cmd.spawn((
-        Position(Vec2 { x: -40.0, y: 30.0 }),
+        Text2dBundle {
+            text: Text::from_section("High Score: ", text_style.clone())
+                .with_justify(JustifyText::Center),
+            transform: Transform::from_xyz(0.0, 35.0, 2.0).with_scale(Vec3::splat(0.14)),
+            ..default()
+        },
         InGameScreen,
         HighScoreText,
-        TextBundle::from_section(
-            "High Score: ",
-            TextStyle {
-                font: game_assets.font.clone(),
-                font_size: 50.0,
-                color: Color::BLACK,
-            },
-        ),
     ));
 }
 
